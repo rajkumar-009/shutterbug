@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Shutterbug-About</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'styles/index.css' %}"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    
+</head>
+<body>
+  <nav class="py-2 primary-background border-bottom">
+    <div class="container d-flex flex-wrap">
+      <ul class="nav me-auto">
+        <li class="nav-item"><a href="{% url 'home:home'%}" class="nav-link link-dark px-2">Home</a></li>
+        <li class="nav-item"><a href="{% url 'home:about'%}" class="nav-link link-dark px-2 active" aria-current="page">About</a></li>
+        <li class="nav-item"><a href="{% url 'search:search'%}" class="nav-link link-dark px-2">Search Photographers</a></li>
+      </ul>
+      <ul class="nav">
+        <li class="nav-item"><a href="{% url 'home:login'%}" class="nav-link link-dark px-2">Login</a></li>
+        <li class="nav-item"><a href="{% url 'home:signup'%}" class="nav-link link-dark px-2">Sign up</a></li>
+      </ul>
+    </div>
+  </nav>
+  <header class="pt-3 pb-2 border-bottom">
+    <div class="container d-flex flex-wrap justify-content-start">
+      <a href="{% url 'home:home'%}" class="align-items-center mb-lg-0 me-lg-auto text-dark text-decoration-none">
+        <span class="fs-4">{% load static %}<img src="{% static 'images/logo.png' %}" class="img-fluid" width="200px" alt='shutterbug logo'/></span>
+      </a>
+    </div>
+  </header>
+  <div class="container my-4 text-center">
+    <h2 class="display-4">A wedding photographer search platform.</h2>
+    <p class="lead fs-3">Shutterbug is a wedding photographer search platform that will allow users to search for photographers within their preferred city.</p>
+    <p class="lead fs-3">You must signup if you are a new user or login to use the search feature.</p>
+    <p class="lead fs-3"><span class="mark">For Photographers</span> - You can register yourselves through the signup page to be seen by potential clients.</p>
+  </div>
+  <div class="container d-flex p-2 flex-column flex-lg-row justify-content-between mb-4">
+    <div class="card flex-fill">
+        <iframe width="560" height="400" src="https://www.youtube.com/embed/dSNzx3pVWLg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="card-img-top"></iframe>
+    </div>
+    <div class="card about-card">
+        <div class="card-body">
+            <h5 class="card-title">Why Shutterbug?</h5>
+            <p class="card-text">By using Shutterbug, you get useful benefits.</p>
+            <div class="accordion" id="accordionExample">
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="headingOne">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                      <strong>No Ads!</strong>
+                    </button>
+                  </h2>
+                  <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                    <div class="accordion-body text-wrap">
+                      There is no Ads on this platform. Use the application without the problems of targeted advertisements.
+                    </div>
+                  </div>
+                </div>
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="headingTwo">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                      <strong>Low cost photographers</strong>
+                    </button>
+                  </h2>
+                  <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                    <div class="accordion-body text-wrap">
+                      The cost of hiring photographers will be greatly reduced. You can find cheap photographers for hire.
+                    </div>
+                  </div>
+                </div>
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="headingThree">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                      <strong>Quick Search!</strong>
+                    </button>
+                  </h2>
+                  <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                    <div class="accordion-body text-wrap">
+                      Find and browse through photographers at a faster pace.
+                    </div>
+                  </div>
+                </div>
+              </div>
+          </div>
+    </div>
+  </div>
+  <footer class="bg-light text-center text-lg-start">
+    <div class="text-center p-3 primary-background">
+        © 2020 Copyright:
+        <a class="text-dark" href="{% url 'home:home'%}">Shutterbug.com</a>
+      </div>
+  </footer>
+  </body>
+  </html>
