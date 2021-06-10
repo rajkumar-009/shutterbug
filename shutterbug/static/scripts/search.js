@@ -54,12 +54,20 @@ $(document).ready(function(){
 
     $('#bookButton').click(function(){
         var sessionDate = $('#sessionDate').val();
-        if(sessionDate == ''){
+        if(!sessionDate){
             alert('Session Date cannot be empty.');
             $('#sessionDate').focus();
         }
-        else{
-            console.log('Session Booked');
+        else {
+            var newDate = new Date(sessionDate);
+            var today = new Date();
+            if (newDate <= today){
+                alert('Session Date must be tomorrow or any future dates.');
+                $('#sessionDate').focus();
+            }
+            else {
+                console.log('Session Booked!');
+            }
         }
     })
     
