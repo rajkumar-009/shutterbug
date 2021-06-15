@@ -36,9 +36,19 @@
             </a>
         </div>
     </header>
+    {% if error_message %}
+        <p class="alert alert-danger">
+	    <strong>{{ error_message }}</strong>
+        </p>
+    {% endif %}
+    {% if success_message %}
+        <p class="alert alert-success">
+	    <strong>{{ success_message }}</strong>
+        </p>
+    {% endif %}
     <div class="container">
 
-        <form action="#" class="form " id="form">
+        <form action="/signup" class="form " id="form" method="POST">{% csrf_token %}
             <h1 class="text-center">
 
                 <bold><u>Registration form</u></bold>
@@ -50,17 +60,17 @@
             <div class="row ">
                 <div class="col ">
                     <label for="inputfirstname ">First name</label>
-                    <input type="text " class="form-control " id="firstname">
+                    <input type="text " class="form-control " id="firstname" name="first_name">
 
                 </div>
                 <div class="col ">
                     <label for="inputmiddlename ">Middle name</label>
-                    <input type="text " class="form-control " placeholder="not required " id="middlename">
+                    <input type="text " class="form-control " placeholder="not required " id="middlename" name="middle_name">
 
                 </div>
                 <div class="col ">
                     <label for="inputlastname ">Last name</label>
-                    <input type="text " class="form-control " id="lastname">
+                    <input type="text " class="form-control " id="lastname" name="last_name">
 
                 </div>
             </div>
@@ -70,13 +80,13 @@
             <div class="row ">
                 <div class="form-group col-md-6 ">
                     <label for="example-date-input ">Date of birth</label>
-                    <input class="form-control " type="date" id="dateofbirth">
+                    <input class="form-control " type="date" id="dateofbirth" name="dob">
 
                 </div>
 
                 <div class="form-group col-md-6 ">
                     <label for="countryoforigin ">Country of origin</label>
-                    <input type=" text " class="form-control " placeholder="not required " id="countryoforigin">
+                    <input type=" text " class="form-control " placeholder="not required " id="countryoforigin" name="country_of_origin">
 
                 </div>
             </div>
@@ -86,13 +96,13 @@
             <div class="row ">
                 <div class="form-group col-md-6 ">
                     <label for="inputEmail4 ">Email</label>
-                    <input type="email " class="form-control " id="email">
+                    <input type="email " class="form-control " id="email" name="email">
 
                 </div>
 
                 <div class="form-group col-md-6 ">
                     <label for="CustomSelect ">Gender</label>
-                    <select class="form-control " id="gender">
+                    <select class="form-control " id="gender" name="gender">
               <option selected>Choose gender</option>
               <option value="1 ">Male</option>
               <option value="2 ">Female</option>
@@ -106,7 +116,7 @@
             <div class="row ">
                 <div class=" form-group col-md-6 ">
                     <label for="Username ">Username</label>
-                    <input type="text " class="form-control " placeholder="required " id="username">
+                    <input type="text " class="form-control " placeholder="required " id="username" name="username">
                     <small id="passwordHelpBlock " class="form-text text-muted ">
               Atleast 8 characters & no special characters
               </small>
@@ -114,7 +124,7 @@
                 </div>
                 <div class="form-group col-md-6 ">
                     <label for="password">Password</label>
-                    <input type="password" class="form-control " placeholder="required " id="password">
+                    <input type="password" class="form-control " placeholder="required " id="password" name="password">
 
                     <small id="passwordHelpBlock " class="form-text text-muted ">
                  Atleast 8 characters, numbers, lowercase letter and uppercase letter
@@ -126,12 +136,12 @@
             <div class="row ">
                 <div class="form-group col-md-6 ">
                     <label for="inputAddress ">Address Line 1</label>
-                    <input type="text " class="form-control " placeholder="1234 Main St " id="address">
+                    <input type="text " class="form-control " placeholder="1234 Main St " id="address" name="address1">
                 </div>
                 <br>
                 <div class="form-group col-md-6 ">
                     <label for="inputAddress2 ">Address Line 2</label>
-                    <input type="text " class="form-control " placeholder="Apartment, studio, or floor " id="address2">
+                    <input type="text " class="form-control " placeholder="Apartment, studio, or floor " id="address2" name="address2">
                 </div>
             </div>
 
@@ -141,11 +151,11 @@
             <div class="row ">
                 <div class="col ">
                     <label for="inputCity ">City</label>
-                    <input type="text " class="form-control " id="city">
+                    <input type="text " class="form-control " id="city" name="city">
                 </div>
                 <div class="col ">
                     <label for="inputState ">State</label>
-                    <select id="state" class="form-control ">
+                    <select id="state" class="form-control " name="state">
           <option>Select US State</option>
           <option value="AL ">Alabama</option>
           <option value="AK ">Alaska</option>
@@ -203,7 +213,7 @@
 
                 <div class="col ">
                     <label for="inputZip ">Zip</label>
-                    <input type="text " class="form-control " id="zip">
+                    <input type="number" class="form-control " id="zip" name="zip">
                 </div>
             </div>
 
@@ -212,12 +222,12 @@
             <div class="row ">
                 <div class="col-md-4 ">
                     <label for="example-tel-input ">Telephone</label>
-                    <input type="tel " class="form-control " value="1-(000)-000-0000 " id="phone">
+                    <input type="tel " class="form-control " value="1-(000)-000-0000 " id="phone" name="telephone">
                 </div>
 
                 <div class="col -md-3 ">
                     <label for="MemberOrganization ">Member Organization</label>
-                    <input type="text " class="form-control " placeholder="not required " id="memberorganization">
+                    <input type="text " class="form-control " placeholder="not required " id="memberorganization" name="member_organization">
                 </div>
             </div>
 
@@ -225,7 +235,7 @@
 
             <div class="text-center row-md-5 mb-2">
                 <label for="inputaccounttype"></label>
-                <select id="accounttype" class="form-control">
+                <select id="accounttype" class="form-control" name="account_type">
                   <option selected>Choose account type</option>
                   <option>Client account</option>
                   <option>Photographer account</option>
@@ -236,7 +246,7 @@
                   <label for="baseprice ">Base Price</label>
                   <div class="input-group">
                     <span class="input-group-text">$</span>
-                    <input type="number" id="baseprice" name="baseprice" class="form-control col-3" disabled>
+                    <input type="number" id="baseprice" name="base_price" class="form-control col-3" disabled>
                 </div>
               </div>
           </div>

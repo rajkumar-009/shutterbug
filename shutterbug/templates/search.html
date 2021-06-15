@@ -37,10 +37,12 @@
     </div>
   </header>
   <!--search form-->
+  
+  
   <div class="container my-4">
       <h2 class="display-5 text-center">Search For Photographers</h2>
       <p class="lead fs-4">Enter either City or Base Price:</p>
-      <form class="my-3">
+      <form class="my-3" action="/search" method="GET" id="searchForm">
               <div class="row mb-3">
                 <label for="city" class="col-form-label col-sm-2 text-center text-sm-end">City:</label>
                 <div class="col-sm-4">
@@ -52,53 +54,49 @@
                 <div class="col-sm-4">
                     <div class="input-group">
                         <span class="input-group-text">$</span>
-                        <input type="number" id="baseprice" name="baseprice" class="form-control col-3">
+                        <input type="number" id="baseprice" name="base_price" class="form-control col-3">
                     </div>
                 </div>
               </div>
               <div class="row">
                   <div class="col-sm-12 text-center">
-                    <button type="button" class="btn btn-lg primary-background me-2" id="searchButton" disabled>Search</button>
+                    <button type="submit" class="btn btn-lg primary-background me-2" id="searchButton" disabled>Search</button>
                     <button type="reset" class="btn btn-lg primary-background" id="resetButton">Reset</button>
                   </div>
               </div>
       </form>
   </div>
   <!--results container-->
-  <div class="container my-4 d-none" id="results">
+  {% if error_message %}
+        <p class="alert alert-danger">
+	    <strong>{{ error_message }}</strong>
+        </p>
+  {% endif %}
+  {% if success_message %}
+  <div class="container my-4" id="results">
     <h5 class="display-6 mb-3">Results:</h5>
     <div class="row">
         <div class="col-lg-5">
             <div class="list-group" id='resultsList'>
-                <button type="button" class="list-group-item list-group-item-action">
-                  <strong class="fs-5">Photographer Name 1</strong>
-                  <p>City: xxx &nbsp;&nbsp;Base Price: $xxx.xx</p>
-                </button>
-                <button type="button" class="list-group-item list-group-item-action" >
-                    <strong class="fs-5">Photographer Name 2</strong>
-                    <p>City: xxx &nbsp;&nbsp;Base Price: $xxx.xx</p>
+                {% for photographer in list %}
+                  <button type="button" class="list-group-item list-group-item-action" value="{{ photographer.id }}">
+                    <strong class="fs-5">{{ photographer.first_name }}</strong>
+                    <p>City: {{ photographer.city }} &nbsp;&nbsp;Base Price: ${{ photographer.base_price }}</p>
                   </button>
-                  <button type="button" class="list-group-item list-group-item-action" >
-                    <strong class="fs-5">Photographer Name 3</strong>
-                    <p>City: xxx &nbsp;&nbsp;Base Price: $xxx.xx</p>
-                  </button>
-                  <button type="button" class="list-group-item list-group-item-action">
-                    <strong class="fs-5">Photographer Name 4</strong>
-                    <p>City: xxx &nbsp;&nbsp;Base Price: $xxx.xx</p>
-                  </button>
+                {% endfor %}
               </div>
         </div>
         <div class="col-lg-7 mt-2 mt-lg-0">
             <div class="card d-none"  id='profileCard'>
-                <strong class="fs-5 card-header">Photographer Name 1</strong>
+                <strong class="fs-5 card-header" id='cardName'>Photographer Name 1</strong>
                 <div class="card-body">
                 {% load static %}
                 <img src="{% static 'images/blank.png' %}" class="card-img-top" width="100%" height="200" alt="profile picture">
-                  <h6 class="card-title mt-3">City: xxx</h6>
-                  <h6 class="card-title">Address: xxx</h6>
-                  <h6 class="card-title">Base Price: $xxx</h6>                  
-                  <h6 class="card-title">Phone: <a href="tel:100-1231234" class="card-link">100-1231234</a></h6>
-                  <h6 class="card-title">Email: <a href="mailto:xxx@yyy.com" class="card-link">xxx@yyy.com</a></h6>
+                  <h6 class="card-title mt-3">City: <span id="cardCity"></span></h6>
+                  <h6 class="card-title">Address: <span id="cardAddress"></span></h6>
+                  <h6 class="card-title">Base Price: $<span  id="cardBasePrice"></span></h6>                  
+                  <h6 class="card-title">Phone: <a href="tel:100-1231234" class="card-link"  id="cardPhone">100-1231234</a></h6>
+                  <h6 class="card-title">Email: <a href="mailto:xxx@yyy.com" class="card-link" id="cardEmail">xxx@yyy.com</a></h6>
                   <h6 class="card-title">Select session date:</h6>
                   <input class="form-control my-3" type="date" id="sessionDate">
                   <button type="button" class="btn primary-background" id="bookButton">Book</button>
@@ -107,6 +105,7 @@
         </div>
     </div>
   </div>
+  {% endif %}
   <!--footer-->
   <footer class="bg-light text-center text-lg-start">
     <div class="text-center p-3 primary-background">

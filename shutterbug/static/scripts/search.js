@@ -22,13 +22,9 @@ $(document).ready(function(){
     });
 
     //search functionality
-    $("#searchButton").click(function(){
-        console.log('search parameters submitted');
-        $('#results').removeClass('d-none');
-        if(!$('#profileCard').hasClass('d-none')){
-            $('#profileCard').addClass('d-none');
-        }
-        $("#resultsList button").removeClass('active');
+    $("#searchButton").click(function(e){
+        e.preventDefault();
+        $("#searchForm").submit();
     }); 
     
     //reset functionality
@@ -42,14 +38,30 @@ $(document).ready(function(){
     //dynamic profile updation when list item is clicked
     $("#resultsList button").click(function(){
         $("#resultsList button").removeClass('active');
-        var element = $(this);
-        var name = $(this).children('strong').text();
-
-        if (!element.hasClass('active')){
-            element.addClass('active');
+        var photographer_id = $(this).val();
+        if (!$(this).hasClass('active')){
+            $(this).addClass('active');
         }
-        $('#profileCard').removeClass('d-none');
-        $('#profileCard').children('strong').text(name);
+        $.ajax(
+            {
+                type:"GET",
+                url: "/search",
+                data:{
+                         id: photographer_id
+                },
+                success: function( data ) 
+                {
+                    $('#profileCard').removeClass('d-none');
+                    var cardName = data[0].first_name +" " + data[0].last_name
+                    $('#cardName').text(cardName);
+                    $('#cardCity').text(data[0].city);
+                    var cardAddress = data[0].address1 + " " + data[0].address2
+                    $('#cardAddress').text(cardAddress);
+                    $('#cardBasePrice').text(data[0].base_price);
+                    $('#cardPhone').text(data[0].telephone);
+                    $('#cardEmail').text(data[0].email);
+                }
+             })
     });
 
     $('#bookButton').click(function(){

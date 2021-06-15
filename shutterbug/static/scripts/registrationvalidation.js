@@ -145,7 +145,8 @@ $(document).ready(function() {
             }
 
         }
-        console.log('form validated and submitted');
+        //console.log('form validated and submitted');
+        $("#form").submit();
     });
 
     $('#accounttype').change(function(){
