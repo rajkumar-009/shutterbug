@@ -1,7 +1,7 @@
 from django.shortcuts import render
-from .models import PhotoshootSession
 from django.http import JsonResponse
-from home.models import Photographer, Client
+from backend.models import Photographer, Client, PhotoshootSession
+
 # Create your views here.
 
 

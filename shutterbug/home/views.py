@@ -1,6 +1,6 @@
 from django.db.models.fields import EmailField
 from django.shortcuts import render
-from .models import Photographer, Client
+from backend.models import Photographer, Client
 # Create your views here.
 
 
