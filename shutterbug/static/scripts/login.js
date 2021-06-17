@@ -1,17 +1,18 @@
 $(document).ready(function(){
     //login functionality with validation
-    $("form").submit(function(e){
+    $("#login").click(function(e){
         e.preventDefault();
-        var email = $('#email').val();
+        var username = $('#username').val();
         var pass = $('#password').val();
-        if(email == ""){
-            alert('Please enter the email address');
+        if(username == ""){
+            alert('Please enter the username');
         }
         else if(pass == ""){
             alert('Please enter the password'); 
         }
         else{
             console.log('Form submitted');
+            $("#loginForm").submit();
         }
 
     });
