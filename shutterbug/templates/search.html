@@ -26,6 +26,7 @@
       </ul>
       <ul class="nav">
         <li class="nav-item"><a href="{% url 'home:login'%}" class="nav-link link-dark px-2">Login</a></li>
+        <li class="nav-item"><a href="{% url 'home:logout'%}" class="nav-link link-dark px-2">Logout</a></li>
         <li class="nav-item"><a href="{% url 'home:signup'%}" class="nav-link link-dark px-2">Sign up</a></li>
       </ul>
     </div>
@@ -99,8 +100,9 @@
                   <h6 class="card-title">Phone: <a href="tel:100-1231234" class="card-link"  id="cardPhone">100-1231234</a></h6>
                   <h6 class="card-title">Email: <a href="mailto:xxx@yyy.com" class="card-link" id="cardEmail">xxx@yyy.com</a></h6>
                   <h6 class="card-title">Select session date:</h6>
-                  <form method="POST">{% csrf_token %}
-                    <input class="form-control my-3" type="date" id="sessionDate">
+                  <form method="POST" id="bookingForm" action="{% url 'search:book' %}">{% csrf_token %}
+                    <input class="form-control my-3" type="date" id="sessionDate" name="sessionDate">
+                    <input type="email" name="photographerEmail" id="photographerEmail" hidden>
                     <button type="submit" class="btn primary-background" id="bookButton">Book</button>
                   </form>
                 </div>

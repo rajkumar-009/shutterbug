@@ -64,7 +64,9 @@ $(document).ready(function(){
              })
     });
 
-    $('#bookButton').click(function(){
+    $('#bookButton').click(function(e){
+        e.preventDefault();
+        $("#photographerEmail").val($('#cardEmail').text());
         var sessionDate = $('#sessionDate').val();
         if(!sessionDate){
             alert('Session Date cannot be empty.');
@@ -73,12 +75,13 @@ $(document).ready(function(){
         else {
             var newDate = new Date(sessionDate);
             var today = new Date();
-            if (newDate <= today){
+            if (newDate <= today || newDate == ""){
                 alert('Session Date must be tomorrow or any future dates.');
                 $('#sessionDate').focus();
             }
             else {
                 console.log('Session Booked!');
+                $("#bookingForm").submit();
             }
         }
     })

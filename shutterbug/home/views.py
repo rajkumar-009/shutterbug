@@ -1,10 +1,11 @@
 from backend.models import PhotoshootSession
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.db.models.fields import EmailField
 from django.shortcuts import redirect, render
 from backend.models import Photographer, Client
 from django.db.models import Q
 from django.contrib.auth.models import User
+from datetime import *
 # Create your views here.
 
 
@@ -16,8 +17,42 @@ def about(request):
     return render(request, 'about.html')
 
 
+def updateSessionDate(request):
+    newDate = request.POST.get('newDate')
+    y, m, d = [int(x) for x in newDate.split('-')]
+    d = date(y, m, d)
+    if d <= date.today():
+        clientUser = Client.objects.get(email=request.user.email)
+        sessions_list = PhotoshootSession.objects.filter(client=clientUser)
+        return render(request, 'dashboard.html', {'list': sessions_list, 'Firstname': clientUser.first_name, 'err_message': 'Please enter future dates other than today for Rescheduling'})
+    else:
+        PhotoshootSession.objects.filter(session_id=request.POST.get(
+            'sessionId')).update(session_date=newDate)
+        return redirect('/dashboard')
+
+
+def deleteSession(request):
+    print(request.POST)
+    PhotoshootSession.objects.filter(session_id=request.POST.get(
+        'sessionId')).delete()
+    return redirect('/dashboard')
+
+
 def dashboard(request):
-    return render(request, 'dashboard.html')
+    if request.user.is_authenticated:
+        clientUser = Client.objects.get(email=request.user.email)
+        try:
+            sessions_list = PhotoshootSession.objects.filter(client=clientUser)
+        except PhotoshootSession.DoesNotExist:
+            return render(request, 'dashboard.html')
+        return render(request, 'dashboard.html', {'list': sessions_list, 'Firstname': clientUser.first_name})
+    else:
+        return render(request, 'login.html', {'err_message': 'Login to view dashboard or search'})
+
+
+def userLogout(request):
+    logout(request)
+    return redirect('/')
 
 
 def userlogin(request):
