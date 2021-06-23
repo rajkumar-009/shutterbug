@@ -9,8 +9,9 @@ import uuid
 
 def searchPhotographers(request):
     if request.user.is_authenticated:
+        # check if request has parameters
         if(not (request.GET.get('base_price') and request.GET.get('city'))):
-            if (request.GET.get('base_price')):
+            if (request.GET.get('base_price')):  # if only base price is given
                 price = request.GET.get('base_price')
                 photographer_list = Photographer.objects.filter(
                     base_price__lte=price)
@@ -24,7 +25,7 @@ def searchPhotographers(request):
                     context = {'success_message': 'list retreived',
                                'list': photographer_list}
                     return render(request, 'search.html', context)
-            if (request.GET.get('city')):
+            if (request.GET.get('city')):  # if only city is given
                 search_city = request.GET.get('city')
                 photographer_list = Photographer.objects.filter(
                     city=search_city)
@@ -37,7 +38,7 @@ def searchPhotographers(request):
                     context = {'list': photographer_list,
                                'success_message': 'list retreived'}
                     return render(request, 'search.html', context)
-        else:
+        else:  # if both base price and city is given
             price = request.GET.get('base_price')
             search_city = request.GET.get('city')
             photographer_list = Photographer.objects.filter(
@@ -53,7 +54,7 @@ def searchPhotographers(request):
                            'success_message': 'list retreived'}
                 return render(request, 'search.html', context)
 
-        if request.is_ajax():
+        if request.is_ajax():  # ajax request handler for getting photographer details
             data = list(Photographer.objects.filter(
                 id=request.GET.get('id')).values('first_name', 'last_name', 'city', 'address1', 'address2', 'base_price', 'telephone', 'email'))
             return JsonResponse(data, safe=False)

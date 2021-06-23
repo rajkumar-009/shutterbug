@@ -23,16 +23,26 @@ def updateSessionDate(request):
     d = date(y, m, d)
     if d <= date.today():
         clientUser = Client.objects.get(email=request.user.email)
-        sessions_list = PhotoshootSession.objects.filter(client=clientUser)
-        return render(request, 'dashboard.html', {'list': sessions_list, 'Firstname': clientUser.first_name, 'err_message': 'Please enter future dates other than today for Rescheduling'})
+        sessions_list = PhotoshootSession.objects.filter(
+            client=clientUser).order_by('session_date')
+        return render(request, 'dashboard.html', {'list': sessions_list, 'Firstname': clientUser.first_name,
+                                                  'err_message': 'Please enter future dates other than today for Rescheduling'})
     else:
-        PhotoshootSession.objects.filter(session_id=request.POST.get(
-            'sessionId')).update(session_date=newDate)
-        return redirect('/dashboard')
+        try:
+            PhotoshootSession.objects.get(client=Client.objects.get(
+                email=request.user.email), session_date=newDate)
+        except PhotoshootSession.DoesNotExist:
+            PhotoshootSession.objects.filter(session_id=request.POST.get(
+                'sessionId')).update(session_date=newDate)
+            return redirect('/dashboard')
+        clientUser = Client.objects.get(email=request.user.email)
+        sessions_list = PhotoshootSession.objects.filter(
+            client=clientUser).order_by('session_date')
+        return render(request, 'dashboard.html', {'list': sessions_list, 'Firstname': clientUser.first_name,
+                                                  'err_message': 'You already have an appointment on this date'})
 
 
 def deleteSession(request):
-    print(request.POST)
     PhotoshootSession.objects.filter(session_id=request.POST.get(
         'sessionId')).delete()
     return redirect('/dashboard')
@@ -42,7 +52,8 @@ def dashboard(request):
     if request.user.is_authenticated:
         clientUser = Client.objects.get(email=request.user.email)
         try:
-            sessions_list = PhotoshootSession.objects.filter(client=clientUser)
+            sessions_list = PhotoshootSession.objects.filter(
+                client=clientUser).order_by('session_date')
         except PhotoshootSession.DoesNotExist:
             return render(request, 'dashboard.html')
         return render(request, 'dashboard.html', {'list': sessions_list, 'Firstname': clientUser.first_name})
