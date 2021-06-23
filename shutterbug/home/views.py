@@ -72,7 +72,6 @@ def userlogin(request):
             'username'), password=request.POST.get('password'))
         if user is not None:
             login(request, user)
-            print(request.POST)
             return redirect('/dashboard')
         else:
             return render(request, 'login.html', {'err_message': 'Invalid Client credentials'})
